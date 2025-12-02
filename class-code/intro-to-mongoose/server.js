@@ -35,6 +35,7 @@ const bookSchema = new mongoose.Schema({
 const Book = mongoose.model('Book',bookSchema)
 
 
+// CREATE
 async function createNewBook(){
 
     const newBook = {
@@ -51,16 +52,36 @@ async function createNewBook(){
 // createNewBook()
 
 
+// READ
 async function getAllBooks(){
     // .find(): returns all documents
-    const allBooks =  await Book.find({title: 'Harry Potter'})
-    console.log(allBooks)
+    const allBooks =  await Book.find() // get all Books
+    const JKBooks =  await Book.find({author: 'JK Rowling'}) // get all books where JK Rowling is the author
+
+    const foundBook = await Book.findById('692ec8ebe922fdff79859c4f') // gets the book that matches the id
+    console.log(foundBook)
 }
 
-getAllBooks()
+// getAllBooks()
+
+
+app.get('/books', async (req,res)=>{
+    const allBooks = await Book.find()
+    res.render('books.ejs',{books: allBooks})
+})
 
 
 
+
+// UPDATE
+async function updateBook(){
+     // 2 arguments
+    // 1. the id of the book we want to update
+    // 2. the updated value
+    await Book.findByIdAndUpdate('692ec8ebe922fdff79859c4f',{title:'HARRY POTTER CHANGED!!!!!!'})
+}
+
+updateBook()
 
 
 
