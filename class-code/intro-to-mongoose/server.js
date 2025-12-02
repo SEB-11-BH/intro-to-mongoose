@@ -35,6 +35,30 @@ const bookSchema = new mongoose.Schema({
 const Book = mongoose.model('Book',bookSchema)
 
 
+async function createNewBook(){
+
+    const newBook = {
+        title: 'Harry Potter 2',
+        author: 'JK Rowling',
+        price: 4,
+        releaseYear: 2005,
+        isBestSeller: true
+    }
+    // Model.Create(): to create a new document in DB
+    await Book.create(newBook)
+}
+
+// createNewBook()
+
+
+async function getAllBooks(){
+    // .find(): returns all documents
+    const allBooks =  await Book.find({title: 'Harry Potter'})
+    console.log(allBooks)
+}
+
+getAllBooks()
+
 
 
 
