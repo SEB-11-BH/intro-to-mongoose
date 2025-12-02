@@ -31,7 +31,10 @@ const bookSchema = new mongoose.Schema({
     isBestSeller: Boolean
 })
 
-// 
+// 2. model
+const Book = mongoose.model('Book',bookSchema)
+
+
 
 
 
