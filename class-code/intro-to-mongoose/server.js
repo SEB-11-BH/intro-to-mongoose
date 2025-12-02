@@ -66,10 +66,17 @@ async function getAllBooks(){
 
 
 app.get('/books', async (req,res)=>{
-    const allBooks = await Book.find()
-    res.render('books.ejs',{books: allBooks})
+    const books = await Book.find()
+    res.render('books.ejs',{books: books})
 })
 
+
+app.get('/books/:id', async (req,res)=>{
+    
+    const foundBook = await Book.findById(req.params.id)
+    
+    res.render('student-details.ejs',foundBook)
+})
 
 
 
