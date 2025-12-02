@@ -17,8 +17,21 @@ async function connectToDB(){
 
 }
 
-connectToDB()
+connectToDB() // connects to our database
 
+
+
+// 1. Schema: explains the structure of the document we will create
+
+const bookSchema = new mongoose.Schema({
+    title: String,
+    author: String,
+    price: Number,
+    releaseYear: Number,
+    isBestSeller: Boolean
+})
+
+// 
 
 
 
