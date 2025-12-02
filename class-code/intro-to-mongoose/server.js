@@ -5,6 +5,10 @@ app.use(express.static('public')) // serves all static files from public folder
 require('dotenv').config() // allows us to use the .env variables
 const mongoose = require('mongoose')
 
+const Recipe = require('./Recipe')
+const Book = require('./models/Book')
+
+console.log(Recipe)
 async function connectToDB(){
 
     try{
@@ -21,32 +25,19 @@ connectToDB() // connects to our database
 
 
 
-// 1. Schema: explains the structure of the document we will create
-
-const bookSchema = new mongoose.Schema({
-    title: String,
-    author: String,
-    price: Number,
-    releaseYear: Number,
-    isBestSeller: Boolean
-})
-
-// 2. model
-const Book = mongoose.model('Book',bookSchema)
-
-
 // CREATE
 async function createNewBook(){
 
     const newBook = {
-        title: 'Harry Potter 2',
-        author: 'JK Rowling',
+        title: 'Sajeda Book',
+        author: 'Sajeda',
         price: 4,
         releaseYear: 2005,
         isBestSeller: true
     }
     // Model.Create(): to create a new document in DB
-    await Book.create(newBook)
+    const createdBook = await Book.create(newBook)
+    console.log(createdBook)
 }
 
 // createNewBook()
@@ -64,32 +55,34 @@ async function getAllBooks(){
 
 // getAllBooks()
 
-
-app.get('/books', async (req,res)=>{
-    const books = await Book.find()
-    res.render('books.ejs',{books: books})
-})
-
-
-app.get('/books/:id', async (req,res)=>{
-    
-    const foundBook = await Book.findById(req.params.id)
-    
-    res.render('student-details.ejs',foundBook)
-})
-
-
-
 // UPDATE
 async function updateBook(){
      // 2 arguments
     // 1. the id of the book we want to update
     // 2. the updated value
-    await Book.findByIdAndUpdate('692ec8ebe922fdff79859c4f',{title:'HARRY POTTER CHANGED!!!!!!'})
+    try{
+        const updatedBook = await Book.findByIdAndUpdate('692ed834ab691d6dbe602c40',{title:'Abeer Book'},{new: true})
+        console.log(updatedBook)
+
+    }
+    catch(error){
+
+    }
 }
 
 updateBook()
 
+
+async function deleteBook(){
+    try{
+        await Book.findByIdAndDelete('692ec9404e88a1e954583065')
+    }
+    catch(error){
+        console.log('error occured ',error)
+    }
+}
+
+// deleteBook()
 
 
 
